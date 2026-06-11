@@ -1,0 +1,113 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Plus Jakarta Sans", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  
+  --color-brand-primary: #0ea5e9;
+  --color-brand-primary-hover: #0284c7;
+  --color-brand-secondary: #7c3aed;
+  --color-brand-secondary-hover: #6d28d9;
+  --color-brand-bg: #faf8ff;
+  --color-brand-card-border: #e0f2fe;
+}
+
+body {
+  background-color: #ffffff;
+  color: #0f172a;
+  font-family: var(--font-sans);
+}
+
+/* Custom shadow signature: A subtle, luminous blue tint glow rather than heavy gray */
+.shadow-luminous {
+  box-shadow: 0 4px 24px rgba(14, 165, 233, 0.08);
+}
+
+.shadow-luminous-lg {
+  box-shadow: 0 8px 32px rgba(14, 165, 233, 0.10);
+}
+
+.shadow-luminous-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.shadow-luminous-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -15px rgba(14, 165, 233, 0.15);
+  border-color: #0ea5e9;
+}
+
+/* Float animation for upload icon */
+@keyframes jgFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.animate-float {
+  animation: jgFloat 3s ease-in-out infinite;
+}
+
+/* Fade-in with TranslateY on load */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-fade-in-up-delay-1 {
+  animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.15s forwards;
+  opacity: 0;
+}
+
+.animate-fade-in-up-delay-2 {
+  animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+  opacity: 0;
+}
+
+.animate-fade-in-up-delay-3 {
+  animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.45s forwards;
+  opacity: 0;
+}
+
+/* Pulse Glows */
+@keyframes redGlowPulse {
+  0%, 100% {
+    box-shadow: 0 4px 24px rgba(239, 68, 68, 0.15);
+  }
+  50% {
+    box-shadow: 0 8px 32px rgba(239, 68, 68, 0.3);
+  }
+}
+
+@keyframes greenGlowPulse {
+  0%, 100% {
+    box-shadow: 0 4px 24px rgba(16, 185, 129, 0.15);
+  }
+  50% {
+    box-shadow: 0 8px 32px rgba(16, 185, 129, 0.3);
+  }
+}
+
+.animate-red-glow {
+  animation: redGlowPulse 4s ease-in-out infinite;
+}
+
+.animate-green-glow {
+  animation: greenGlowPulse 4s ease-in-out infinite;
+}
+

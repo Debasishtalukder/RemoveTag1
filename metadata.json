@@ -1,0 +1,6 @@
+{
+  "name": "RemoveTag",
+  "description": "Strip C2PA, XMP, & EXIF metadata instantly and locally in your browser. Complete file security.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
