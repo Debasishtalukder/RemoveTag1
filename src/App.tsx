@@ -39,6 +39,7 @@ import {
   ExternalLink as LinkIcon
 } from "lucide-react";
 import { detectMetadata, stripMetadata, StripOptions, DetectedMetadata } from "./utils/metadataStripper";
+import { RemoveTagLogo } from "./components/RemoveTagLogo";
 import JSZip from "jszip";
 
 interface CleanedFile {
@@ -465,15 +466,10 @@ export default function App() {
       <header className="sticky top-0 z-50 w-full h-16 bg-white/85 backdrop-blur-md border-b border-[#e0f2fe] flex items-center justify-between px-6 md:px-12 transition-all">
         <div 
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="flex items-center gap-2.5 cursor-pointer hover:opacity-95"
+          className="flex items-center gap-2.5 cursor-pointer hover:scale-[1.01] active:scale-[0.99] transition-all"
           id="navbar-logo"
         >
-          <div className="w-9 h-9 rounded-xl bg-[#0ea5e9] flex items-center justify-center text-white shadow-sm shadow-sky-500/20">
-            <Shield className="w-5 h-5 fill-white/10" strokeWidth={2.5} />
-          </div>
-          <span className="font-display font-extrabold text-xl text-[#0f172a] tracking-tight">
-            Remove<span className="text-[#0ea5e9]">Tag</span>
-          </span>
+          <RemoveTagLogo size="md" />
         </div>
 
         {/* Desktop Navbar Menu links */}
@@ -1330,12 +1326,7 @@ export default function App() {
           
           <div className="flex flex-col items-center md:items-start gap-2">
             <div className="flex items-center gap-2.5">
-              <div className="w-7 h-7 rounded-lg bg-[#0ea5e9] text-white flex items-center justify-center">
-                <Shield className="w-4 h-4 text-white" />
-              </div>
-              <span className="font-display font-extrabold text-base text-[#0f172a] tracking-tight">
-                Remove<span className="text-[#0ea5e9]">Tag</span>
-              </span>
+              <RemoveTagLogo size="sm" />
             </div>
             <p className="text-xs text-[#64748b] max-w-sm text-center md:text-left mt-1">
               Your files never leave your browser. Advanced client-side metadata sanitization for complete autonomy.
