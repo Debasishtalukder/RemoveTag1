@@ -88,6 +88,9 @@ export default function App() {
   // Mobile menu toggle
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  // Completed download tracking state
+  const [downloadCompleted, setDownloadCompleted] = useState(false);
+
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Scroll logic
@@ -232,6 +235,9 @@ export default function App() {
   // Processes new files
   const processFiles = useCallback(async (incomingFiles: FileList | File[]) => {
     setWarning(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
     const validFormat = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
     const incomingList = Array.from(incomingFiles).filter(file => {
       const type = file.type.toLowerCase();
@@ -271,7 +277,7 @@ export default function App() {
         const detectedMetas = await detectMetadata(arrayBuffer, fileType);
 
         newItems.push({
-          id: Math.random().toString(36).substring(2, 11),
+          id: `${Date.now()}_${Math.random()}`,
           name: file.name,
           originalSize: file.size,
           cleanedSize: file.size,
@@ -362,6 +368,9 @@ export default function App() {
     if (e.target.files && e.target.files.length > 0) {
       processFiles(e.target.files);
     }
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
   };
 
   // Keyboard CTRLV Clipboard support
@@ -394,7 +403,16 @@ export default function App() {
       if (file.cleanedUrl) URL.revokeObjectURL(file.cleanedUrl);
     });
     setFiles([]);
+    setBatchProgress(null);
     setWarning(null);
+    setDownloadCompleted(false);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+
+  const handleStartOver = () => {
+    clearAllFiles();
   };
 
   // Download a single cleaned file
@@ -409,6 +427,9 @@ export default function App() {
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
+    
+    // Set individual download completes
+    setDownloadCompleted(true);
   };
 
   // Multi compression ZIP download 
@@ -443,6 +464,9 @@ export default function App() {
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(mainUrl);
+      
+      // Set download completes
+      setDownloadCompleted(true);
     } catch (err) {
       console.error("ZIP creation failed in browser memory: ", err);
     }
@@ -615,6 +639,10 @@ export default function App() {
             <button
               id="browse-files-btn"
               type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                fileInputRef.current?.click();
+              }}
               className="inline-flex items-center justify-center gap-2 px-6 h-11 min-h-[44px] rounded-full bg-[#0ea5e9] hover:bg-[#0284c7] text-white font-extrabold text-sm active:scale-95 transition-all shadow-md shadow-sky-500/15"
             >
               <FileImage className="w-4 h-4" />
@@ -718,6 +746,29 @@ export default function App() {
           {/* File Upload Queue List */}
           {files.length > 0 && (
             <div className="mt-8 border-t border-[#e0f2fe] pt-8">
+              {downloadCompleted && (
+                <div 
+                  id="success-start-over-banner"
+                  className="mb-6 p-4 rounded-xl border border-emerald-100 bg-emerald-50 text-emerald-800 text-xs sm:text-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4 animate-fade-in-up"
+                >
+                  <div className="flex items-start gap-2.5">
+                    <CheckCircle className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <span className="font-extrabold block text-slate-900">Success! Metadata Sanitized & Downloaded</span>
+                      <span className="text-slate-600 text-xs">Your clean, label-safe copy is now saved. Ready for publication!</span>
+                    </div>
+                  </div>
+                  <button
+                    id="clear-start-over-btn"
+                    onClick={handleStartOver}
+                    className="min-h-[44px] justify-center inline-flex items-center gap-2 px-5 py-2 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs transition-all tracking-wide uppercase shadow-sm shadow-emerald-500/20 active:scale-95 cursor-pointer flex-shrink-0"
+                  >
+                    <RefreshCw className="w-3.5 h-3.5" />
+                    Clear & Start Over
+                  </button>
+                </div>
+              )}
+
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
                 <div>
                   <h4 className="font-display font-extrabold text-base text-[#0f172a]">
@@ -737,6 +788,17 @@ export default function App() {
                     <Trash2 className="w-3.5 h-3.5 text-rose-500" />
                     Clear List
                   </button>
+
+                  {downloadCompleted && (
+                    <button
+                      id="clear-start-over-queue-btn"
+                      onClick={handleStartOver}
+                      className="min-h-[44px] flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-4 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-extrabold transition-all cursor-pointer shadow-sm shadow-emerald-100"
+                    >
+                      <RefreshCw className="w-3.5 h-3.5" />
+                      Clear & Start Over
+                    </button>
+                  )}
 
                   <button
                     id="download-all-zip-btn"
