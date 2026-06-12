@@ -235,14 +235,21 @@ export default function App() {
   // Processes new files
   const processFiles = useCallback(async (incomingFiles: FileList | File[]) => {
     setWarning(null);
+    
+    // 1. Copy live FileList to a safe JS Array first before resetting the file input
+    const filesArray = Array.from(incomingFiles || []);
+    
+    // 2. Clear input value AFTER copying to allow uploading same files consecutively
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
-    const validFormat = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
-    const incomingList = Array.from(incomingFiles).filter(file => {
-      const type = file.type.toLowerCase();
-      const ext = file.name.split(".").pop()?.toLowerCase();
-      return validFormat.includes(type) || ["jpg", "jpeg", "png", "webp"].includes(ext || "");
+    
+    const incomingList = filesArray.filter(file => {
+      if (!file) return false;
+      const type = (file.type || "").toLowerCase();
+      const ext = (file.name || "").split(".").pop()?.toLowerCase() || "";
+      const isValid = type.startsWith("image/") || ["jpg", "jpeg", "png", "webp"].includes(ext);
+      return isValid;
     });
 
     if (incomingList.length === 0) {
@@ -367,9 +374,6 @@ export default function App() {
   const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       processFiles(e.target.files);
-    }
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
     }
   };
 
@@ -618,7 +622,7 @@ export default function App() {
               ref={fileInputRef}
               type="file"
               multiple
-              accept="image/png, image/jpeg, image/jpg, image/webp"
+              accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp"
               className="hidden"
               onChange={handleFileInputChange}
             />

@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Rounded Squircle Dark Canvas Background -->
+  <rect width="512" height="512" rx="135" fill="#1c1c1e" />
+  
+  <g stroke-linejoin="round" stroke-linecap="round">
+    <!-- 1. Thick Outer White Shadow Outline -->
+    <g fill="#ffffff" stroke="#ffffff" stroke-width="50">
+      <path d="M 150,175 C 150,175 220,172 245,172 C 280,172 295,190 295,215 C 295,240 280,258 250,265 C 260,280 280,315 295,340 C 300,348 285,358 275,358 C 263,358 245,325 233,303 C 225,288 215,278 198,278 H 185 V 345 C 185,358 150,358 150,345 Z" />
+      <path d="M 295,195 H 395 C 405,195 405,220 395,220 H 368 V 345 C 368,358 335,358 335,345 V 220 H 295 C 285,220 285,195 295,195 Z" />
+      <circle cx="268" cy="276" r="28" />
+    </g>
+
+    <!-- 2. Thick Outer Dark Border Outline -->
+    <g fill="#111112" stroke="#111112" stroke-width="26">
+      <path d="M 150,175 C 150,175 220,172 245,172 C 280,172 295,190 295,215 C 295,240 280,258 250,265 C 260,280 280,315 295,340 C 300,348 285,358 275,358 C 263,358 245,325 233,303 C 225,288 215,278 198,278 H 185 V 345 C 185,358 150,358 150,345 Z" />
+      <path d="M 295,195 H 395 C 405,195 405,220 395,220 H 368 V 345 C 368,358 335,358 335,345 V 220 H 295 C 285,220 285,195 295,195 Z" />
+      <circle cx="268" cy="276" r="28" />
+    </g>
+
+    <!-- 3. Fill characters with solid White -->
+    <ellipse cx="198" cy="220" rx="27" ry="27" fill="#ffffff" />
+    <path d="M 150,175 C 150,175 220,172 245,172 C 280,172 295,190 295,215 C 295,240 280,258 250,265 C 260,280 280,315 295,340 C 300,348 285,358 275,358 C 263,358 245,325 233,303 C 225,288 215,278 198,278 H 185 V 345 C 185,358 150,358 150,345 Z" fill="#ffffff" />
+    <path d="M 295,195 H 395 C 405,195 405,220 395,220 H 368 V 345 C 368,358 335,358 335,345 V 220 H 295 C 285,220 285,195 295,195 Z" fill="#ffffff" />
+
+    <!-- 4. Inner details & Orange Accent Orb -->
+    <ellipse cx="198" cy="220" rx="15" ry="15" fill="#111112" />
+    <circle cx="268" cy="276" r="16" fill="#ff4b1f" stroke="#111112" stroke-width="5" />
+  </g>
+</svg>
